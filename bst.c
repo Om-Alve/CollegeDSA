@@ -40,6 +40,86 @@ void insert(int data){
 	}
 }
 
+void delete(int x){
+	struct node *current,*follow;
+	current = root;
+	follow = NULL;
+	while(current!=NULL && current->data!=x){
+		follow = current;
+		if(x < current->data)
+			current = current->left;
+		else
+			current = current->right;
+	}
+	if(current==NULL)
+		printf("Node not found");
+	else{
+		// case 1
+		if(current->left==NULL && current->right==NULL){
+			if(current==root){
+				root = NULL;
+			}
+			else{
+				if(follow->left == current){
+					follow->left = NULL;
+				}
+				else{
+					follow->right = NULL;
+				}
+			}
+		}
+		// case 2
+		else if(current->left!=NULL && current->right==NULL){
+			if(current==root){
+				root = current->left;
+			}
+			else{
+				if(follow->left == current){
+					follow->left = current->left;
+				}
+				else{
+					follow->right = current->left;
+				}
+			}
+		}
+		// case 3
+		else if(current->left==NULL && current->right!=NULL){
+			if(current==root){
+				root = current->right;
+			}
+			else{
+				if(follow->left == current){
+					follow->left = current->right;
+				}
+				else{
+					follow->right = current->right;
+				}
+			}
+		}
+		// case 4 
+		else{
+			struct node *c;
+			c = current->right;
+			while(c->left!=NULL){
+				c = c->left;
+			}
+			c->left = current->left;
+			if(current==root){
+				root = current->right;
+			}
+			else{
+				if(follow->left == current){
+					follow->left = current->right;
+				}
+				else{
+					follow->right = current->right;
+				}
+			}
+		}
+
+	}
+}
+
 void preorder(struct node *n){
 	if(n==NULL){
 		return;
