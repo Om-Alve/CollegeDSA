@@ -1,36 +1,34 @@
 #include<stdio.h>
 
-
-
-int partition(int arr[],int l,int h){
-	int pivot = arr[l];
+int partition(int arr[],int l, int h){
+	int temp,pivot = arr[l];
 	int i=l,j=h;
 	while(i<j){
-		while(arr[i] <= pivot && i<=h-1){
+		while(arr[i]<=pivot && i<h){
 			i++;
 		}
-		while(arr[j] > pivot && j>=l+1){
-			j--;
+		while(arr[j]>pivot && j>l){
+			j--;	
 		}
 		if(i<j){
-			int temp = arr[i];
+			temp = arr[i];
 			arr[i] = arr[j];
 			arr[j] = temp;
 		}
 	}
-	int temp = arr[l];
+	temp = pivot;
 	arr[l] = arr[j];
-	arr[j] = temp;
+	arr[j] = pivot;
 	return j;
 }
 
-void quickSort(int arr[],int l,int h){
-	if(l>=h){
+void quickSort(int arr[],int s,int e){
+	if(s>=e){
 		return;
 	}
-	int p = partition(arr,l,h);
-	quickSort(arr,l,p-1);
-	quickSort(arr,p+1,h);
+	int pivot = partition(arr,s,e);
+	quickSort(arr,s,pivot-1);
+	quickSort(arr,pivot+1,e);
 }
 
 int main(){
